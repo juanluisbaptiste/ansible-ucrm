@@ -13,7 +13,7 @@ Role Variables
 --------------
 
 | Variable Name | Default | Description |
-|---------------| |-------------|
+|---------------|---------|-------------|
 | http_port | 8080 | UCRM http port |
 | https_port | 8443 | UCRM https port |
 | suspension_port | 8081 | UCRM service suspension port |
@@ -22,7 +22,7 @@ Role Variables
 | subnet_internal | 192.168.90.1/24 | Docker pirvate subnet |
 | skip_system_setup | false | Do not check system and install requirements (docker, docker-compose, create user) |
 | no_auto_update | true | Do not auto update the running container |
-| ucrm_uninstall | false | Uninstall UCRM. It removes the .env and .yml files, and makes a backup of the current data directory. |
+| ucrm_uninstall | false | Uninstall UCRM. It removes the .env and .yml files, and makes a backup of the current data directory|
 
 Dependencies
 ------------
