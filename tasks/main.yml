@@ -1,0 +1,37 @@
+---
+# tasks file for ucrm
+- name: Download UCRM installer
+  get_url:
+    url: https://ucrm.ubnt.com/install
+    dest: "{{ ucrm_installer }}"
+    mode: 0755
+  when: not ucrm_uninstall
+  tags:
+    - ucrm_download_installer
+- name: Run UCRM installer
+  shell: "{{ ucrm_installer }} --http-port {{ http_port }}
+                               --https-port {{ https_port }}
+                               --suspension-port {{ suspension_port }}
+                               --netflow-port {{ netflow_port }}
+                               --subnet {{subnet }}
+                               --subnet-internal {{ subnet_internal }}
+                               --ucrm-user {{ ucrm_user }}
+                               --skip-system-setup {{ skip_system_setup }}
+                               --no-auto-update {{ no_auto_update }}"
+  become: true
+  register: output
+  when: not ucrm_uninstall
+  tags:
+    - install_ucrm
+- debug:
+    var: output
+  when: not ucrm_uninstall
+  tags:
+    - install_ucrm
+- name: Delete installer script
+  file:
+    path: "{{ ucrm_installer }}"
+    state: absent
+
+- include: tasks/uninstall.yml
+  when: ucrm_uninstall

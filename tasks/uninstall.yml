@@ -1,0 +1,46 @@
+---
+  - name: Check if configuration files exist
+    stat:
+      path: "{{ ucrm_install_path }}/docker-compose.env"
+    register: env_file
+
+  - name: Uninstall UCRM container
+    docker_service:
+      project_src: /home/{{ ucrm_user }}/
+      remove_orphans: yes
+      remove_volumes: yes
+      state: absent
+    register: output
+    when: env_file.stat.exists == True
+    tags:
+      - ucrm_stop
+  - debug:
+      var: output
+    when: env_file.stat.exists == True
+    tags:
+      - ucrm_uninstall
+      - ucrm_stop
+  - name: Delete config files
+    file:
+      path: "{{ ucrm_install_path }}/{{ item }}"
+      state: absent
+    with_items:
+      - docker-compose.env
+      - docker-compose.yml
+      - docker-compose.migrate.yml
+      - elasticsearch.yml
+    become: true
+    tags:
+      - ucrm_uninstall
+      - ucrm_delete_config_files
+  - name: Check that the somefile.conf exists
+    stat:
+      path: "{{ ucrm_install_path }}/data"
+    register: p
+  - name: Backup data directory
+    command: mv {{ ucrm_install_path }}/data {{ ucrm_install_path }}/data.{{ ansible_date_time.date }}
+    become: true
+    when: p.stat.isdir is defined and p.stat.isdir
+    tags:
+      - ucrm_uninstall
+      - ucrm_backup_data_dir

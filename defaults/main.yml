@@ -1,0 +1,17 @@
+---
+# defaults file for ucrm
+http_port: 8080
+https_port: 8443
+suspension_port: 8081
+netflow_port: 2055
+subnet: 192.168.80.1/24
+subnet_internal: 192.168.90.1/24
+skip_system_setup: false
+no_auto_update: true
+ucrm_uninstall: false
+# yml:
+
+# playbook configuration
+ucrm_user: ucrm
+ucrm_install_path: /home/{{ ucrm_user }}
+ucrm_installer: /tmp/ucrm_install.sh
