@@ -3,6 +3,8 @@
     stat:
       path: "{{ ucrm_install_path }}/docker-compose.env"
     register: env_file
+    tags:
+      - ucrm_uninstall
 
   - name: Uninstall UCRM container
     docker_service:
@@ -37,6 +39,8 @@
     stat:
       path: "{{ ucrm_install_path }}/data"
     register: p
+    tags:
+      - ucrm_uninstall
   - name: Backup data directory
     command: mv {{ ucrm_install_path }}/data {{ ucrm_install_path }}/data.{{ ansible_date_time.date }}
     become: true
