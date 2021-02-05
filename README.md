@@ -59,4 +59,4 @@ GPLv3
 Author Information
 ------------------
 
-Juan Luis Baptiste - (juan.baptiste (__at__) gmail.com)
+Juan Luis Baptiste - (juan (__at__) juanbaptiste __dot__ tech)
